@@ -36,9 +36,10 @@ class Chore:
     
 
 class OneOffGoal(Chore):
-    def __init__(self, name, description, cash_amount, deadline):
+    def __init__(self, name, description, cash_amount, deadline, goal_size):
         super().__init__(name, description, cash_amount)
         self._deadline = deadline
+        self._goal_size = goal_size
 
     def get_deadline(self):
         """returns deadline (STR)"""
@@ -49,6 +50,17 @@ class OneOffGoal(Chore):
         returns: UPDATED self._deadline (STR)"""
         self._deadline = new_deadline
         return self._deadline
+    
+    def get_goal_size(self):
+        """returns goal_size (STR)
+        options: Large, Small"""
+        return self._goal_size
+    
+    def set_goal_size(self, new_size):
+        """sets/edits goal size (STR)
+        returns: UPDATED self._goal_size (STR)"""
+        self._goal_size = new_size
+        return self._goal_size
 
 
 class OngoingChore(Chore):
