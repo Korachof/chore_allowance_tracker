@@ -10,6 +10,7 @@ def main():
 
 def start_menu():
     """start menu for main script"""
+    print("")       # an empty print to skip a line visually
     print("Welcome to the Chore Allowance Tracker!\n")
     print("Please Select from the Options Below\n")
     print("1) New User")
@@ -25,16 +26,30 @@ def menu_select():
     
     if user_input == "1":
         create_user()
-
     elif user_input == "2":
         load_user()
-
     elif user_input == "3":
         exit_program()
 
 
 def create_user():
-    pass
+    """Creates a new user. Asks for input for user name.
+    returns: user_profile (user.User object)"""
+    print("CREATE NEW PROFILE\n")
+    print("*If you want to go back to the previous step, type 2 instead of your name\n*")
+    print("What is your Name?")
+    check = 0
+    while check != "1":
+        user_name = input("Type your name and press ENTER: ")
+        print("")       # an empty print to skip a line visually
+
+        if user_name == "2":
+            start_menu()
+        
+        print(f"Is {user_name} correct?")
+        check = input("Type 1 for YES. Type Any other key for NO: ")
+        print("")       # an empty print to skip a line visually
+    return user.User(user_name, 0, [], [], [])
 
 def load_user():
     pass
