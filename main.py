@@ -44,7 +44,7 @@ def create_user():
         print("")       # an empty print to skip a line visually
 
         if user_name == "2":
-            start_menu()
+            main()
         
         print(f"Is {user_name} correct?")
         check = input("Type 1 for YES. Type Any other key for NO: ")
