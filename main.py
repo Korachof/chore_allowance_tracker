@@ -59,17 +59,17 @@ class UI:       # considering refactoring the UI menu options into a class.
         """Provides the visuals and option functionality for the user in their profile.
         parameter: user_object: user.User class OBJ
         returns: """
-
-        print(f"Welcome {self._user_object.get_name()}!")
-        print("Please select from the options below by typing the number and pressing ENTER")
-        print("1) Add New Goal")
-        print("2) One-Off Goal List")
-        print("3) Recurring Habits List")
-        print("4) Negative Habits List")
-        print("5) Completed Goals List")
-        print("5) Main Menu")
-        print("6) Exit")
-        self.user_profile_select()
+        while True: 
+            print(f"Welcome {self._user_object.get_name()}!\n")
+            print("Please select from the options below by typing the number and pressing ENTER\n")
+            print("1) Add New Goal")
+            print("2) One-Off Goal List")
+            print("3) Recurring Habits List")
+            print("4) Negative Habits List")
+            print("5) Completed Goals List")
+            print("5) Main Menu")
+            print("6) Exit")
+            self.user_profile_select()
 
     def user_profile_select(self):
         """User Profile Menu Selection"""
@@ -81,7 +81,10 @@ class UI:       # considering refactoring the UI menu options into a class.
             user_input = input("Type the Associated Number and Press ENTER: ")
 
         if user_input == "1":
-            return self.add_new_goal_menu()
+            # create new one-off goal and add it to the user one_off_goal list.
+            self._user_object.get_one_off_goal_list().append(self.add_new_goal_menu())
+            print("Your one-off goal has been added!\n")
+            print(len(self._user_object.get_one_off_goal_list()))
         elif user_input == "2":
             for goal in self._user_object.get_one_off_goal_list():
                 print(f"{count}) {goal}")
