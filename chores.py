@@ -77,6 +77,13 @@ class OngoingChore(Chore):
         returns self._completed_count"""
         self._completed_count += 1
         return self._completed_count
+    
+
+class NegativeHabit(OngoingChore):
+    def __init__(self, name, description, cash_amount, completed_count):
+        super().__init__(name, description, cash_amount,  completed_count)
+
+    
 
 
     
