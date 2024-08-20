@@ -82,9 +82,7 @@ class UI:       # considering refactoring the UI menu options into a class.
 
         if user_input == "1":
             # create new one-off goal and add it to the user one_off_goal list.
-            self._user_object.get_one_off_goal_list().append(self.add_new_goal_menu())
-            print("Your one-off goal has been added!\n")
-            print(len(self._user_object.get_one_off_goal_list()))
+            return self.add_new_goal_menu()
         elif user_input == "2":
             for goal in self._user_object.get_one_off_goal_list():
                 print(f"{count}) {goal}")
@@ -141,9 +139,45 @@ class UI:       # considering refactoring the UI menu options into a class.
         if goal_select == "1":
             return self.one_off_goal_cash(name, description)
         elif goal_select == "2":
-            pass
+            return self.recurring_goal_cash(name, description)
         elif goal_select == "3":
-            pass
+            return self.negative_goal_cash(name, description)
+        
+    def recurring_goal_cash(self, name, description):
+        cash = None
+        check_binary = 0
+        while check_binary == 0:
+            cash = input("Amount of Money Earned Each Time the Goal is Completed: ")
+            print("")
+            try:
+                int(cash)
+                int(cash) >= 0
+            except:
+                print("Positive Integers or 0 only please\n")
+            else:
+                check_binary = 1
+        recurring_goal = chores.OngoingChore(name, description, cash, 0)
+        self._user_object.get_recurring_chore_list().append(recurring_goal)
+        print("Your recurring goal has been added!")
+        return
+
+    def negative_goal_cash(self, name, description):
+        cash = None
+        check_binary = 0
+        while check_binary == 0:
+            cash = input("Amount of money you must pay whenever you do this habit: ")
+            print("")
+            try:
+                int(cash)
+                int(cash) <= 0
+            except:
+                print("Negative integers or 0 only please\n")
+            else:
+                check_binary = 1
+        negative_habit = chores.NegativeHabit(name, description, cash, 0)
+        self._user_object.get_negative_habit_list().append(negative_habit)
+        print("Your negative habit has been added!")
+        return
 
     def one_off_goal_cash(self, name, description):
         cash = None
@@ -151,6 +185,7 @@ class UI:       # considering refactoring the UI menu options into a class.
         goal_size = 0
         while check_binary == 0:
             cash = input("Amount of Money Earned for Completion (Integers Only): ")
+            print("")
             try:
                 int(cash)
             except:
@@ -185,7 +220,10 @@ class UI:       # considering refactoring the UI menu options into a class.
                 print("Please enter the deadline in the format provided or press ENTER if no Deadline\n")
             else:
                 binary_check = 1
-        return chores.OneOffGoal(name, description, cash, deadline, goal_size)
+        one_off_goal = chores.OneOffGoal(name, description, cash, deadline, goal_size)
+        self._user_object.get_one_off_goal_list().append(one_off_goal)
+        print("Your one-off goal has been added!\n")
+        return
 
     def load_user(self):
         pass
