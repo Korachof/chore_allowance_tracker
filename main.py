@@ -89,15 +89,15 @@ class UI:       # considering refactoring the UI menu options into a class.
                 count += 1
         elif user_input == "3":
             for goal in self._user_object.get_recurring_chore_list():
-                print(f"{count}) {goal}")
+                print(f"{count}) {goal.get_name()}")
                 count += 1
         elif user_input == "4":
             for goal in self._user_object.get_negative_habit_list():
-                print(f"{count}) {goal}")
+                print(f"{count}) {goal.get_name()}")
                 count += 1
         elif user_input == "5":
             for goal in self._user_object.get_completed_goal_dict():
-                print(f"{goal}: {self._user_object.get_completed_goal_dict()[goal]}")
+                print(f"{goal.get_name()}: {self._user_object.get_completed_goal_dict()[goal]}")
         elif user_input == "6":
             self.exit_program(1)
 
@@ -153,7 +153,6 @@ class UI:       # considering refactoring the UI menu options into a class.
                 int(cash)
                 if int(cash) < 0:
                     raise Exception()
-
             except:
                 print("Positive Integers or 0 only please\n")
             else:
