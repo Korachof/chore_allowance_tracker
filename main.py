@@ -151,11 +151,15 @@ class UI:       # considering refactoring the UI menu options into a class.
             print("")
             try:
                 int(cash)
+            except:
+                print("Positive Integers or 0 only please\n")
+            try:
                 int(cash) >= 0
             except:
                 print("Positive Integers or 0 only please\n")
             else:
                 check_binary = 1
+            
         recurring_goal = chores.OngoingChore(name, description, cash, 0)
         self._user_object.get_recurring_chore_list().append(recurring_goal)
         print("Your recurring goal has been added!")
@@ -169,6 +173,9 @@ class UI:       # considering refactoring the UI menu options into a class.
             print("")
             try:
                 int(cash)
+            except:
+                print("Negative integers or 0 only please\n")
+            try:
                 int(cash) <= 0
             except:
                 print("Negative integers or 0 only please\n")
@@ -211,6 +218,9 @@ class UI:       # considering refactoring the UI menu options into a class.
                 return chores.OneOffGoal(name, description, cash, "None", goal_size)
             try:
                 int(deadline[0])
+            except:
+                print("Please enter the deadline in the format provided or press ENTER if no Deadline\n")
+            try:
                 int(deadline[1])
                 int(deadline[3])
                 int(deadline[4])
