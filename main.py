@@ -14,8 +14,7 @@ class UI:       # considering refactoring the UI menu options into a class.
 
     def start_menu(self):
         """start menu for main script"""
-        print("")       # an empty print to skip a line visually
-        print("Welcome to the Chore Allowance Tracker!\n")
+        print("\nWelcome to the Chore Allowance Tracker!\n")
         print("Please Select from the Options Below\n")
         print("1) New User")
         print("2) Load User")
@@ -45,14 +44,12 @@ class UI:       # considering refactoring the UI menu options into a class.
         check = 0
         while check != "1":
             user_name = input("Type your name and press ENTER: ")
-            print("")       # an empty print to skip a line visually
 
             if user_name == "2":
                 return self.start_menu()
 
-            print(f"Is {user_name} correct?")
+            print(f"\nIs {user_name} correct?")
             check = input("Type 1 for YES. Type Any other key for NO: ")
-            print("")       # an empty print to skip a line visually
         return user.User(user_name, 0, [], [], [], [])
 
     def user_profile(self):
@@ -60,7 +57,7 @@ class UI:       # considering refactoring the UI menu options into a class.
         parameter: user_object: user.User class OBJ
         returns: """
         while True: 
-            print(f"Welcome {self._user_object.get_name()}!\n")
+            print(f"\n***Welcome {self._user_object.get_name()}! You currently have ${self._user_object.get_spending_money()}\n***")
             print("Please select from the options below by typing the number and pressing ENTER\n")
             print("1) Add New Goal")
             print("2) One-Off Goal List")
@@ -73,33 +70,39 @@ class UI:       # considering refactoring the UI menu options into a class.
 
     def user_profile_select(self):
         """User Profile Menu Selection"""
-        print("")
         count = 1
         user_input = None
         while (user_input != "1" and user_input != "2" and user_input != "3" and
             user_input != "4" and user_input != "5" and user_input != "6"):
-            user_input = input("Type the Associated Number and Press ENTER: ")
-
+            user_input = input("\nType the Associated Number and Press ENTER: ")
         if user_input == "1":
             # create new one-off goal and add it to the user one_off_goal list.
             return self.add_new_goal_menu()
         elif user_input == "2":
+            print("\nOne-Off Goal List\n")
             for goal in self._user_object.get_one_off_goal_list():
                 print(f"{count}) {goal}")
                 count += 1
         elif user_input == "3":
+            print("\nRecurring Habits List\n")
             for goal in self._user_object.get_recurring_chore_list():
                 print(f"{count}) {goal.get_name()}")
                 count += 1
         elif user_input == "4":
+            print("\nNegative Habits List\n")
             for goal in self._user_object.get_negative_habit_list():
                 print(f"{count}) {goal.get_name()}")
                 count += 1
         elif user_input == "5":
+            print("\nCompleted Habits List\n")
             for goal in self._user_object.get_completed_goal_dict():
-                print(f"{goal.get_name()}: {self._user_object.get_completed_goal_dict()[goal]}")
+                print(f"{count}) {goal.get_name()}: {self._user_object.get_completed_goal_dict()[goal]}")
+                count += 1
         elif user_input == "6":
             self.exit_program(1)
+        self.user_profile()
+
+
 
     def add_new_goal_menu(self):
         """menu to add goal to specific list"""
@@ -120,11 +123,29 @@ class UI:       # considering refactoring the UI menu options into a class.
             user_input = input("Type the Associated Number and Press ENTER: ")
 
         if user_input == "1" or user_input == "2" or user_input == "3":
-            return self.add_new_goal_input(user_input)
+            return self.goal_select_check(user_input)
         elif user_input == 4:
             self.user_profile()
         elif user_input == 5:
             self.exit_program(2)
+
+    def goal_select_check(self, goal_select):
+        """Check to see if the user_input is what the user wanted"""
+        if goal_select == "1":
+            choice = "One-Off Goal"
+        elif goal_select == "2":
+            choice = "Recurring Goal"
+        elif goal_select == "3":
+            choice = "Negative Habit"
+        check = 0
+        while check != 1:
+            user_input = 0
+            while user_input != 1 and user_input != 2:
+                user_input = input(f"You selected {choice}. Is that correct? Type 1 for YES. Type 2 for NO.")
+            if user_input == 1:
+                return self.add_new_goal_input(goal_select)
+            elif user_input == 2:
+                return self.add_new_goal_menu()
 
     def add_new_goal_input(self, goal_select):
         """helper function for add_new_goal_select
@@ -157,7 +178,7 @@ class UI:       # considering refactoring the UI menu options into a class.
                 print("Positive Integers or 0 only please\n")
             else:
                 check_binary = 1
-            
+        self._user_object.add_spending_money(cash)
         recurring_goal = chores.OngoingChore(name, description, cash, 0)
         self._user_object.get_recurring_chore_list().append(recurring_goal)
         print("Your recurring goal has been added!")
@@ -177,6 +198,7 @@ class UI:       # considering refactoring the UI menu options into a class.
                 print("Negative integers or 0 only please\n")
             else:
                 check_binary = 1
+        self._user_object.add_spending_money(cash)
         negative_habit = chores.NegativeHabit(name, description, cash, 0)
         self._user_object.get_negative_habit_list().append(negative_habit)
         print("Your negative habit has been added!")
@@ -209,7 +231,6 @@ class UI:       # considering refactoring the UI menu options into a class.
         binary_check = 0
         while binary_check == 0 or len(deadline) != 8 and deadline != None and deadline[3] != "/" and deadline[5] != "/":
             deadline = input("Deadline in 0X/0X/XX format (If No Deadline, Just Press ENTER Without Typing): ")
-            print("")       # an empty print to skip a line visually
             if deadline == "":
                 return chores.OneOffGoal(name, description, cash, "None", goal_size)
             try:
@@ -220,12 +241,13 @@ class UI:       # considering refactoring the UI menu options into a class.
                 int(deadline[6])
                 int(deadline[7])
             except:
-                print("Please enter the deadline in the format provided or press ENTER if no Deadline\n")
+                print("\nPlease enter the deadline in the format provided or press ENTER if no Deadline\n")
             else:
                 binary_check = 1
+        self._user_object.add_spending_money(cash)
         one_off_goal = chores.OneOffGoal(name, description, cash, deadline, goal_size)
         self._user_object.get_one_off_goal_list().append(one_off_goal)
-        print("Your one-off goal has been added!\n")
+        print("\nYour one-off goal has been added!\n")
         return
 
     def load_user(self):
@@ -239,7 +261,6 @@ class UI:       # considering refactoring the UI menu options into a class.
         if exit_check == "1":
             sys.exit()
         else:
-            print("")       # an empty print to skip a line visually
             if return_menu == 0:
                 return self.start_menu()
             elif return_menu == 1:
